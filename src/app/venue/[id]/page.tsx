@@ -2,17 +2,16 @@
 
 import { useParams, useRouter } from "next/navigation";
 import { venues } from "@/lib/data/venues";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { NeonButton } from "@/components/ui/NeonButton";
 import { motion } from "framer-motion";
 import { 
   MapPin, 
-  CreditCard, 
   ArrowLeft,
   Star,
-  ExternalLink,
+  Clock,
+  Navigation,
   Info,
-  Tag
+  Tag,
+  CreditCard
 } from "lucide-react";
 import Link from "next/link";
 
@@ -24,11 +23,11 @@ export default function VenueDetailPage() {
 
   if (!venue) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background p-6 text-center">
-        <div>
-          <h1 className="text-4xl font-display font-bold text-white mb-6 uppercase">Локация не найдена</h1>
+      <div className="min-h-screen flex items-center justify-center bg-butter p-6 text-center">
+        <div className="bg-white editorial-border editorial-shadow p-12 max-w-md">
+          <h1 className="text-4xl font-black text-navy mb-6 uppercase">МЕСТО НЕ НАЙДЕНО</h1>
           <Link href="/">
-            <NeonButton variant="cyan">Вернуться на главную</NeonButton>
+            <button className="bg-rust text-butter px-8 py-4 font-black uppercase tracking-widest editorial-shadow-sm">ВЕРНУТЬСЯ</button>
           </Link>
         </div>
       </div>
@@ -36,182 +35,135 @@ export default function VenueDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background pb-24">
-      {/* Hero Header */}
-      <div className="relative h-[60vh] w-full overflow-hidden">
-        <motion.img 
-          initial={{ scale: 1.1 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 10, ease: "linear" }}
-          src={venue.image} 
-          alt={venue.name}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-transparent to-background" />
-        
-        {/* Top Controls */}
-        <div className="absolute top-6 left-6 sm:top-8 sm:left-8 z-20">
-          <button 
-            onClick={() => router.back()}
-            className="flex items-center gap-3 bg-black/50 backdrop-blur-2xl border border-white/10 px-8 py-4 sm:px-6 sm:py-3 text-[11px] sm:text-[10px] font-black uppercase tracking-[0.2em] text-white hover:bg-neon-cyan hover:text-black transition-all shadow-xl"
-            aria-label="Вернуться назад"
-          >
-            <ArrowLeft size={18} className="sm:size-4" /> Назад
-          </button>
-        </div>
+    <div className="min-h-screen bg-butter pb-24 selection:bg-navy selection:text-butter">
+      {/* Top Navigation Bar */}
+      <nav className="p-6 md:p-10 flex justify-between items-center border-b-2 border-navy/10 bg-butter/80 backdrop-blur-md sticky top-0 z-50">
+        <button 
+          onClick={() => router.back()}
+          className="flex items-center gap-3 text-rust hover:text-navy transition-all font-black text-xs uppercase tracking-widest group"
+        >
+          <ArrowLeft size={16} strokeWidth={3} className="group-hover:-translate-x-1 transition-transform" /> НАЗАД К СПИСКУ
+        </button>
+        <div className="text-[10px] font-black text-navy uppercase tracking-[0.4em] hidden md:block">ВЫБОР: {venue.name}</div>
+      </nav>
 
-        {/* Hero Content */}
-        <div className="absolute bottom-12 left-0 right-0 z-10">
-          <div className="max-w-6xl mx-auto px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-            >
-              <div className="flex flex-wrap items-center gap-4 mb-6">
-                <span className="bg-neon-cyan text-black px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em]">
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          
+          {/* Main Visual & Info Area */}
+          <div className="lg:col-span-8 space-y-12">
+            
+            {/* Poster Header */}
+            <div className="space-y-6">
+              <div className="flex flex-wrap items-center gap-4">
+                <span className="bg-navy text-butter px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em]">
                   {venue.category}
                 </span>
-                <div className="flex items-center gap-2 bg-black/50 backdrop-blur-md px-4 py-1.5 border border-white/10">
-                  <Star size={14} className="text-yellow-500 fill-yellow-500" />
-                  <span className="text-[11px] font-black text-white">{venue.rating}</span>
-                  <span className="text-[9px] text-white/40 uppercase tracking-widest font-bold ml-1">Яндекс Карты</span>
+                <div className="flex items-center gap-2 bg-white editorial-border px-4 py-1.5">
+                  <Star size={14} className="text-rust fill-rust" />
+                  <span className="text-[12px] font-black text-navy">{venue.rating}</span>
                 </div>
               </div>
-              <h1 className="text-6xl md:text-8xl font-display font-black text-white uppercase tracking-tighter italic">
-                {venue.name}
+              
+              <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-navy uppercase leading-[0.8] tracking-tighter">
+                {venue.name.split(' ')[0]} <br/>
+                <span className="text-rust italic">{venue.name.split(' ').slice(1).join(' ')}</span>
               </h1>
-            </motion.div>
-          </div>
-        </div>
-      </div>
+            </div>
 
-      <div className="max-w-6xl mx-auto px-6 -mt-16 relative z-20">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-12">
-            <GlassCard className="p-10 md:p-14 border-white/5 bg-white/[0.02] shadow-2xl">
-              <h2 className="flex items-center gap-3 text-white text-sm font-black uppercase tracking-[0.3em] mb-10 pb-4 border-b border-white/5">
-                <Info size={18} className="text-neon-cyan" /> Описание места
-              </h2>
-              <div className="prose prose-invert max-w-none">
-                <p className="text-white text-2xl leading-relaxed font-serif italic mb-12 border-l-4 border-neon-cyan pl-8 py-2">
-                  {venue.description}
-                </p>
-                <div className="text-gray-300 text-xl leading-relaxed whitespace-pre-line space-y-6">
+            {/* Featured Image */}
+            <div className="relative group">
+               <div className="bg-white p-4 editorial-border editorial-shadow transition-all group-hover:shadow-none group-hover:translate-x-1 group-hover:translate-y-1">
+                 <img 
+                  src={venue.image} 
+                  alt={venue.name}
+                  className="w-full h-[60vh] object-cover grayscale hover:grayscale-0 transition-all duration-1000"
+                 />
+               </div>
+               <div className="absolute -bottom-6 -right-6 bg-navy text-butter p-8 editorial-shadow hidden md:block max-w-xs transform rotate-2">
+                  <div className="text-[10px] font-black uppercase tracking-widest mb-2 border-b border-butter/20 pb-2">ЭКСПЕРТНОЕ МНЕНИЕ</div>
+                  <p className="text-sm font-medium leading-relaxed italic">
+                    «{venue.description}»
+                  </p>
+               </div>
+            </div>
+
+            {/* In-depth details */}
+            <div className="bg-white editorial-border editorial-shadow p-10 md:p-16 space-y-12">
+              <section>
+                <h3 className="text-xs font-black text-rust uppercase tracking-[0.4em] mb-8 border-b-2 border-rust/10 pb-4 flex items-center gap-3">
+                  <Info size={16} /> О ЛОКАЦИИ
+                </h3>
+                <div className="text-xl md:text-2xl text-navy/80 font-medium leading-relaxed whitespace-pre-line">
                   {venue.fullDescription}
                 </div>
-              </div>
+              </section>
 
-              {/* Photo Gallery Section - High Priority */}
-              <div className="mt-20 pt-10 border-t border-white/5">
-                <h3 className="flex items-center gap-3 text-white text-xs font-black uppercase tracking-[0.3em] mb-10">
-                  <span className="w-8 h-[1px] bg-neon-cyan/50" /> ГАЛЕРЕЯ ЛОКАЦИИ
+              {/* Dynamic Gallery */}
+              <section>
+                <h3 className="text-xs font-black text-rust uppercase tracking-[0.4em] mb-8 border-b-2 border-rust/10 pb-4 flex items-center gap-3">
+                  ГАЛЕРЕЯ
                 </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  {venue.images.map((img, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      className="group relative aspect-[4/3] overflow-hidden rounded-sm border border-white/10"
-                    >
-                      <img 
-                        src={img} 
-                        alt={`${venue.name} view ${index + 1}`}
-                        className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </motion.div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {venue.images.map((img, i) => (
+                    <div key={i} className="bg-butter p-2 editorial-border hover:rotate-1 transition-transform cursor-pointer overflow-hidden">
+                       <img src={img} alt={`${venue.name} ${i}`} className="w-full h-64 object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-500" />
+                    </div>
                   ))}
                 </div>
-              </div>
-
-              <div className="mt-20 pt-10 border-t border-white/5">
-                <h3 className="flex items-center gap-3 text-white text-sm font-black uppercase tracking-[0.3em] mb-8">
-                  <Tag size={18} className="text-neon-violet" /> Особенности
-                </h3>
-                <div className="flex flex-wrap gap-4">
-                  {venue.tags.map(tag => (
-                    <span key={tag} className="bg-white/5 border border-white/10 px-6 py-3 text-[11px] text-white/70 uppercase tracking-widest font-black hover:border-black hover:bg-neon-cyan hover:text-black transition-all cursor-default">
-                      {tag}
-                    </span>
-                  ))}
-                  {venue.mood.map(mood => (
-                    <span key={mood} className="bg-neon-violet/10 border border-neon-violet/30 px-6 py-3 text-[11px] text-neon-violet uppercase tracking-widest font-black">
-                      {mood}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </GlassCard>
+              </section>
+            </div>
           </div>
 
-          {/* Sidebar Info - Sticky */}
-          <div className="space-y-8 lg:sticky lg:top-8 self-start">
-            <GlassCard className="p-10 border-white/5 bg-white/[0.03]">
-              <div className="space-y-12">
-                <div className="flex items-start gap-6">
-                  <div className="w-14 h-14 rounded-sm bg-neon-cyan/10 flex items-center justify-center shrink-0 border border-neon-cyan/20 text-neon-cyan shadow-[0_0_20px_rgba(0,255,255,0.1)]">
-                    <MapPin size={28} />
+          {/* Sticky Editorial Sidebar */}
+          <div className="lg:col-span-4 space-y-8">
+            <div className="lg:sticky lg:top-32 space-y-8">
+              <div className="bg-navy text-butter p-10 editorial-shadow space-y-10">
+                <div className="flex flex-col gap-6">
+                  <div className="flex items-start gap-4">
+                    <MapPin size={24} className="text-rust shrink-0" />
+                    <div>
+                      <div className="text-[10px] font-black text-butter/40 uppercase tracking-widest mb-1">АДРЕС</div>
+                      <div className="text-lg font-bold leading-tight uppercase">{venue.address || "МОСКВА, ЦЕНТР"}</div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="text-[11px] text-white/30 uppercase tracking-[0.3em] font-black mb-2">Адрес</div>
-                    <div className="text-lg text-white font-bold leading-tight">{venue.address}</div>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-6">
-                  <div className="w-14 h-14 rounded-sm bg-neon-violet/10 flex items-center justify-center shrink-0 border border-neon-violet/20 text-neon-violet shadow-[0_0_20px_rgba(180,0,255,0.1)]">
-                    <CreditCard size={28} />
-                  </div>
-                  <div>
-                    <div className="text-[11px] text-white/30 uppercase tracking-[0.3em] font-black mb-2">Средний чек</div>
-                    <div className="text-lg text-white font-bold leading-tight">{venue.avgCheck}</div>
-                  </div>
-                </div>
-
-                <div className="pt-8 space-y-4">
-                  <a 
-                    href={venue.mapUrl} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="block"
-                  >
-                    <NeonButton variant="cyan" className="w-full py-6 text-xs font-black tracking-[0.3em]">
-                      ПОСТРОИТЬ МАРШРУТ
-                    </NeonButton>
-                  </a>
                   
-                  <div className="flex items-center justify-between px-2 pt-6 border-t border-white/5">
-                    <div className="text-[10px] text-white/40 uppercase font-black tracking-widest">Рейтинг</div>
-                    <div className="flex items-center gap-2">
-                       <Star size={14} className="text-neon-cyan fill-neon-cyan shadow-[0_0_10px_rgba(0,255,255,0.5)]" />
-                       <span className="text-xl font-display font-black text-white italic">{venue.rating}</span>
+                  <div className="flex items-start gap-4">
+                    <CreditCard size={24} className="text-rust shrink-0" />
+                    <div>
+                      <div className="text-[10px] font-black text-butter/40 uppercase tracking-widest mb-1">СРЕДНИЙ ЧЕК</div>
+                      <div className="text-lg font-bold leading-tight">{venue.avgCheck}</div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <Tag size={24} className="text-rust shrink-0" />
+                    <div className="flex flex-wrap gap-2">
+                       {venue.tags.map(t => (
+                         <span key={t} className="text-[10px] border border-butter/20 px-2 py-1 font-black">#{t.toUpperCase()}</span>
+                       ))}
                     </div>
                   </div>
                 </div>
-              </div>
-            </GlassCard>
 
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              className="p-10 border border-white/10 rounded-sm bg-gradient-to-br from-white/[0.03] to-transparent text-center relative overflow-hidden group"
-            >
-              <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-neon-cyan to-transparent opacity-50" />
-              <p className="text-[11px] text-gray-400 uppercase tracking-[0.2em] font-black mb-6 leading-relaxed relative z-10">
-                Это место идеально соответствует вашему запросу на <span className="text-neon-cyan">{venue.mood[0]}</span> и <span className="text-neon-violet">{venue.withWhom[0]}</span>
-              </p>
-              <div className="h-0.5 w-16 bg-neon-cyan/30 mx-auto group-hover:w-24 transition-all duration-500" />
-            </motion.div>
+                <div className="pt-8 border-t border-butter/10 space-y-4">
+                  <a href={venue.mapUrl} target="_blank" className="block text-center bg-rust text-butter py-5 font-black text-sm uppercase tracking-[0.2em] editorial-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all active:scale-95">
+                    ПОСТРОИТЬ МАРШРУТ
+                  </a>
+                  <button className="w-full border-2 border-butter/20 py-4 font-black text-[10px] uppercase tracking-widest hover:bg-butter hover:text-navy transition-all">ДОБАВИТЬ В ИЗБРАННОЕ</button>
+                </div>
+              </div>
+
+              {/* Decorative Poster Bit */}
+              <div className="bg-rust text-butter p-8 editorial-border editorial-shadow rotate-[-1deg] text-center">
+                 <div className="text-5xl font-black italic mb-2 tracking-tighter">100%</div>
+                 <div className="text-[10px] font-black tracking-[0.3em] uppercase">VERIFIED LOCATION</div>
+              </div>
+            </div>
           </div>
 
         </div>
       </div>
-
     </div>
   );
 }

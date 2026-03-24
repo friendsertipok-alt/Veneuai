@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -7,14 +7,14 @@ const inter = Inter({
   subsets: ["latin", "cyrillic"],
 });
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin"],
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
+  subsets: ["latin", "cyrillic"],
 });
 
 export const metadata: Metadata = {
-  title: "VenueAI — Умный Консьерж Твоих Впечатлений",
-  description: "Идеальные маршруты и места для отдыха в стиле Киберпанк",
+  title: "Куда сегодня? — Твой Гид по Москве",
+  description: "Интеллектуальный подбор лучших локаций и маршрутов в Москве",
 };
 
 export default function RootLayout({
@@ -25,10 +25,9 @@ export default function RootLayout({
   return (
     <html
       lang="ru"
-      className={`${inter.variable} ${spaceGrotesk.variable} h-full antialiased dark`}
+      className={`${inter.variable} ${playfair.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-background text-foreground selection:bg-neon-cyan selection:text-black">
-        <div className="fixed inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(188,19,254,0.05)_0%,rgba(0,0,0,0)_50%)] pointer-events-none" />
+      <body className="min-h-full bg-butter text-navy selection:bg-navy selection:text-butter">
         <main className="relative z-10 flex-grow">
           {children}
         </main>
