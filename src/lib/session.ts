@@ -68,7 +68,7 @@ export async function decrypt(token: string, secret: string): Promise<any | null
 }
 
 export async function getSession(): Promise<any | null> {
-  const password = process.env.ADMIN_PASSWORD || "test1234";
+  const password = process.env.ADMIN_PASSWORD || "lizalegends228";
   const cookieStore = await cookies();
   const sessionCookie = cookieStore.get(COOKIE_NAME);
   if (!sessionCookie) return null;
@@ -81,7 +81,7 @@ export async function getSession(): Promise<any | null> {
 }
 
 export async function setSession(payload: any) {
-  const password = process.env.ADMIN_PASSWORD || "test1234";
+  const password = process.env.ADMIN_PASSWORD || "lizalegends228";
   const expires = Date.now() + SESSION_DURATION;
   const token = await encrypt({ ...payload, expires }, password);
   

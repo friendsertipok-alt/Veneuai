@@ -61,7 +61,7 @@ export default function AdminDashboard() {
       const res = await fetch("/api/lizasecure/stats");
       if (!res.ok) {
         if (res.status === 401) {
-          router.push("/portal-lizalegends/login");
+          router.push("/portal-lizalegends-secure-x9f2/login");
           return;
         }
         throw new Error("Не удалось загрузить статистику");
@@ -83,7 +83,7 @@ export default function AdminDashboard() {
   const handleLogout = async () => {
     try {
       await fetch("/api/lizasecure/logout", { method: "POST" });
-      router.push("/portal-lizalegends/login");
+      router.push("/portal-lizalegends-secure-x9f2/login");
       router.refresh();
     } catch (e) {
       console.error(e);

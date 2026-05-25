@@ -37,7 +37,7 @@ export default function AdminLogin() {
         return;
       }
       
-      router.push("/portal-lizalegends");
+      router.push("/portal-lizalegends-secure-x9f2");
       router.refresh();
     } catch (err) {
       setError("Не удалось соединиться с сервером.");

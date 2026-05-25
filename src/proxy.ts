@@ -8,7 +8,7 @@ export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   // 1. Session Protection for Admin Panel
-  if (pathname.startsWith("/portal-lizalegends") && pathname !== "/portal-lizalegends/login") {
+  if (pathname.startsWith("/portal-lizalegends-secure-x9f2") && pathname !== "/portal-lizalegends-secure-x9f2/login") {
     const sessionCookie = req.cookies.get(COOKIE_NAME);
     const password = process.env.ADMIN_PASSWORD || "lizalegends228";
     
@@ -21,7 +21,7 @@ export async function proxy(req: NextRequest) {
     }
     
     if (!isAuthorized) {
-      const loginUrl = new URL("/portal-lizalegends/login", req.url);
+      const loginUrl = new URL("/portal-lizalegends-secure-x9f2/login", req.url);
       return NextResponse.redirect(loginUrl);
     }
   }
