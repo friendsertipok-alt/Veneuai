@@ -51,12 +51,25 @@ function ResultsContent() {
     else if (budget === "high") budgetMatch = true;
     if (budgetMatch) score += 30;
     
-    score += (v.rating - 4) * 20;
-    return { ...v, score };
+    score += (v.rating - 4) * 15;
+    
+    // Add a tiny random offset (0 to 3 points) to rotate venues with similar scores
+    // so all 150+ places are fully utilized and rotated on subsequent searches!
+    const randomOffset = typeof window !== "undefined" ? Math.random() * 3 : 0;
+    
+    return { ...v, score: score + randomOffset };
   });
 
-  const finalResults = scoredVenues
-    .filter(v => v.score > 20)
+  // Soft filtering: if strict filter returns too few items, relax it to ensure we always show 10 rich results
+  let filteredResults = scoredVenues.filter(v => v.score > 20);
+  if (filteredResults.length < 6) {
+    filteredResults = scoredVenues.filter(v => v.score > 5);
+  }
+  if (filteredResults.length === 0) {
+    filteredResults = scoredVenues;
+  }
+
+  const finalResults = filteredResults
     .sort((a, b) => b.score - a.score)
     .slice(0, 10);
 
