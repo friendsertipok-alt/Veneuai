@@ -4,7 +4,7 @@ import { decrypt } from "@/lib/session";
 
 const COOKIE_NAME = "venueai_admin_session";
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   // 1. Session Protection for Admin Panel
