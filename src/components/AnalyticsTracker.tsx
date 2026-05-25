@@ -13,7 +13,7 @@ export default function AnalyticsTracker() {
     if (lastTrackedPath.current === pathWithQuery) return;
     lastTrackedPath.current = pathWithQuery;
 
-    if (pathname.startsWith("/admin") || pathname.startsWith("/api")) return;
+    if (pathname.startsWith("/portal-lizalegends") || pathname.startsWith("/api")) return;
 
     const trackVisit = async () => {
       try {

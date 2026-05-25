@@ -21,7 +21,7 @@ export default function AdminLogin() {
     setError("");
     
     try {
-      const res = await fetch("/api/admin/login", {
+      const res = await fetch("/api/lizasecure/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password })
@@ -37,7 +37,7 @@ export default function AdminLogin() {
         return;
       }
       
-      router.push("/admin");
+      router.push("/portal-lizalegends");
       router.refresh();
     } catch (err) {
       setError("Не удалось соединиться с сервером.");

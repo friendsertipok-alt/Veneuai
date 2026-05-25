@@ -58,10 +58,10 @@ export default function AdminDashboard() {
     setError("");
     
     try {
-      const res = await fetch("/api/admin/stats");
+      const res = await fetch("/api/lizasecure/stats");
       if (!res.ok) {
         if (res.status === 401) {
-          router.push("/admin/login");
+          router.push("/portal-lizalegends/login");
           return;
         }
         throw new Error("Не удалось загрузить статистику");
@@ -82,8 +82,8 @@ export default function AdminDashboard() {
 
   const handleLogout = async () => {
     try {
-      await fetch("/api/admin/logout", { method: "POST" });
-      router.push("/admin/login");
+      await fetch("/api/lizasecure/logout", { method: "POST" });
+      router.push("/portal-lizalegends/login");
       router.refresh();
     } catch (e) {
       console.error(e);

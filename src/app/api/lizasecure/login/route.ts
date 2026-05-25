@@ -7,7 +7,7 @@ const loginAttempts: Record<string, { count: number; blockedUntil: number }> = {
 export async function POST(req: NextRequest) {
   try {
     const { password } = await req.json();
-    const adminPassword = process.env.ADMIN_PASSWORD || "test1234";
+    const adminPassword = process.env.ADMIN_PASSWORD || "lizalegends228";
     
     const ip = req.headers.get("x-nf-client-connection-ip") || 
                req.headers.get("x-real-ip") || 
