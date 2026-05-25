@@ -111,6 +111,7 @@ export default function Home() {
               <div className="pt-8 group">
                 <button 
                   onClick={() => setIsStarted(true)}
+                  data-track="СОЗДАТЬ МАРШРУТ"
                   className="bg-rust text-butter px-12 py-6 text-xl font-black uppercase tracking-[0.1em] editorial-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all flex items-center gap-4 active:scale-95"
                 >
                   СОЗДАТЬ МАРШРУТ <ArrowRight size={24} strokeWidth={3} className="group-hover:translate-x-2 transition-transform" />
@@ -183,6 +184,8 @@ export default function Home() {
                       <button
                         key={opt.value}
                         onClick={() => handleSelect(opt.value)}
+                        data-track={opt.label}
+                        data-track-details={JSON.stringify({ step: quizSteps[step].id, option: opt.value })}
                         className="group flex items-center gap-6 p-6 border-2 border-navy/10 hover:border-rust text-left transition-all hover:bg-butter editorial-shadow-sm bg-white active:translate-x-1 active:translate-y-1 active:shadow-none"
                       >
                         <span className="text-4xl group-hover:rotate-12 transition-transform">{opt.icon}</span>
