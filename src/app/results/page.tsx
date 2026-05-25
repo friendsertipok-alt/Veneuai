@@ -79,7 +79,7 @@ function ResultsContent() {
               МАРШРУТ <span className="text-rust italic">ГРАМОТНО</span> ПОСТРОЕН
             </motion.h1>
             <p className="text-navy/70 mt-8 font-medium text-xl leading-relaxed">
-              Мы проанализировали базу из 30+ авторских локаций специально для вашего запроса. Вот лучшие совпадения:
+              Мы проанализировали базу из {venues.length} авторских локаций специально для вашего запроса. Вот лучшие совпадения:
             </p>
           </div>
           
