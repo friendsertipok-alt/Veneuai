@@ -38,6 +38,14 @@ function ResultsContent() {
   const targetWithWhom = withWhom ? withWhomMap[withWhom] : null;
   const targetMood = mood ? moodMap[mood] : null;
 
+  // Map time param to database sections
+  let targetSection: "День / Вечер" | "Ночь / Чилл" | null = null;
+  if (time === "day" || time === "evening") {
+    targetSection = "День / Вечер";
+  } else if (time === "night") {
+    targetSection = "Ночь / Чилл";
+  }
+
   // Recommendation Logic
   const scoredVenues = venues.map(v => {
     let score = 0;
@@ -52,6 +60,15 @@ function ResultsContent() {
     if (budgetMatch) score += 30;
     
     score += (v.rating - 4) * 15;
+
+    // Apply temporal filtering/boosting
+    if (targetSection) {
+      if (v.timeSection === targetSection) {
+        score += 50; // Boost suitable time section
+      } else {
+        score -= 100; // Penalize unsuitable time section
+      }
+    }
     
     // Add a tiny random offset (0 to 3 points) to rotate venues with similar scores
     // so all 150+ places are fully utilized and rotated on subsequent searches!
